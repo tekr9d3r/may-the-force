@@ -280,6 +280,6 @@ function snapBaseUrl(request: Request): string {
 
 const app = new Hono();
 
-registerSnapHandler(app, snap);
+registerSnapHandler(app, snap, { og: false });
 
 export default app;
