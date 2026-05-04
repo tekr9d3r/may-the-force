@@ -92,7 +92,8 @@ function landingScreen(base: string, lightForce: number, darkForce: number, tota
     ui: {
       root: "page",
       elements: {
-        page: { type: "stack", props: {}, children: ["title", "subtitle", "chart", "btnLight", "btnDark", "footer"] },
+        page: { type: "stack", props: {}, children: ["hero", "title", "subtitle", "chart", "btnLight", "btnDark", "footer"] },
+        hero: { type: "image", props: { url: `${base}/dark-light-side.png`, aspect: "16:9", alt: "Light Side vs Dark Side" } },
         title: { type: "text", props: { content: "May the 4th Be With You ⚡", weight: "bold", align: "center" } },
         subtitle: { type: "text", props: { content: "Lower FID + more followers = more Force. Which side calls to you?", size: "sm", align: "center" } },
         chart: { type: "bar_chart", props: { bars: [
