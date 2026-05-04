@@ -1,5 +1,3 @@
-import { join, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
 import { Hono } from "hono";
 import { SPEC_VERSION, type SnapFunction } from "@farcaster/snap";
 import { registerSnapHandler } from "@farcaster/snap-hono";
@@ -280,18 +278,8 @@ function snapBaseUrl(request: Request): string {
   return `http://localhost:${process.env.PORT ?? "3003"}`.replace(/\/$/, "");
 }
 
-const __dir = dirname(fileURLToPath(import.meta.url));
-const fontsDir = join(__dir, "../assets/fonts");
-
 const app = new Hono();
 
-registerSnapHandler(app, snap, {
-  og: {
-    fonts: [
-      { path: join(fontsDir, "inter-latin-400-normal.woff"), weight: 400 },
-      { path: join(fontsDir, "inter-latin-700-normal.woff"), weight: 700 },
-    ],
-  },
-});
+registerSnapHandler(app, snap);
 
 export default app;
