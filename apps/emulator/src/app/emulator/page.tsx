@@ -422,12 +422,19 @@ export default function EmulatorPage() {
         height: "100%",
         maxHeight: "100%",
         display: "grid",
-        gridTemplateRows: "auto 1fr",
+        gridTemplateRows: "auto auto 1fr",
         gridTemplateColumns: "1fr",
         background: "var(--bg-primary)",
         overflow: "hidden",
       }}
     >
+      {/* Hero image */}
+      <img
+        src="/dark-light-side.png"
+        alt="Light Side vs Dark Side"
+        style={{ width: "100%", display: "block", objectFit: "cover" }}
+      />
+
       {/* Top bar: form */}
       <EmulatorForm
         urlInput={urlInput}
