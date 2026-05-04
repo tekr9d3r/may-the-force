@@ -1,0 +1,80 @@
+# Color Palette
+
+All colors in snaps (accent, progress bar, bar chart) are specified as **named palette
+colors**, not hex values. The client maps each name to a hex value appropriate for its
+current light/dark mode. This ensures visual consistency across the feed and guarantees
+readability in both modes.
+
+The palette has 8 colors:
+
+| Name | Light | Dark |
+| -------- | --------- | --------- |
+| `gray` | <ColorSwatchSingle hex="#6E6A86" /> `#6E6A86` | <ColorSwatchSingle hex="#908CAA" /> `#908CAA` |
+| `blue` | <ColorSwatchSingle hex="#286983" /> `#286983` | <ColorSwatchSingle hex="#9CCFD8" /> `#9CCFD8` |
+| `red` | <ColorSwatchSingle hex="#B4637A" /> `#B4637A` | <ColorSwatchSingle hex="#EB6F92" /> `#EB6F92` |
+| `amber` | <ColorSwatchSingle hex="#EA9D34" /> `#EA9D34` | <ColorSwatchSingle hex="#F6C177" /> `#F6C177` |
+| `green` | <ColorSwatchSingle hex="#3E8F8F" /> `#3E8F8F` | <ColorSwatchSingle hex="#56D4A4" /> `#56D4A4` |
+| `teal` | <ColorSwatchSingle hex="#56949F" /> `#56949F` | <ColorSwatchSingle hex="#3E8FB0" /> `#3E8FB0` |
+| `purple` | <ColorSwatchSingle hex="#907AA9" /> `#907AA9` | <ColorSwatchSingle hex="#C4A7E7" /> `#C4A7E7` |
+| `pink` | <ColorSwatchSingle hex="#D7827E" /> `#D7827E` | <ColorSwatchSingle hex="#EBBCBA" /> `#EBBCBA` |
+
+The snap specifies a name (e.g. `"blue"`). The client resolves it to the correct hex for
+the current mode.
+
+## Where Palette Colors Are Used
+
+**`page.theme.accent`** — one of the 8 palette names (default: `"purple"`).
+
+```json
+{
+  "theme": { "accent": "blue" }
+}
+```
+
+**`progress.color`** — `"accent"` (uses theme accent) or any palette name.
+
+```json
+{ "type": "progress", "value": 72, "max": 100, "color": "green" }
+```
+
+**`bar_chart.color`** — `"accent"` or any palette name (default bar fill).
+
+**`bar_chart.bars[].color`** — any palette name (per-bar override).
+
+**Exception:** `grid.cells[].color` accepts free hex (`#RRGGBB`). Games and pixel
+canvases need arbitrary colors for content like Wordle tiles and pixel art.
+
+```json
+{
+  "type": "bar_chart",
+  "bars": [
+    { "label": "Yes", "value": 62, "color": "green" },
+    { "label": "No", "value": 38, "color": "red" }
+  ]
+}
+```
+
+Where the accent color appears on UI surfaces is documented on
+[Theme & Styling](/snap/theme#accent-surfaces).
+
+## Grid Cell Colors (Exception)
+
+Each cell can specify an arbitrary hex color via `cells[].color` (see exception above).
+This is necessary for game boards, pixel art, and other visual applications where the
+color IS the content.
+
+```json
+{
+  "type": "grid",
+  "cols": 5,
+  "rows": 6,
+  "cells": [
+    { "row": 0, "col": 0, "color": "#22C55E", "content": "C" },
+    { "row": 0, "col": 1, "color": "#6B7280", "content": "R" },
+    { "row": 0, "col": 2, "color": "#CA8A04", "content": "A" }
+  ]
+}
+```
+
+Global styling limits (fonts, spacing, light/dark mode, etc.) are on
+[Theme & Styling](/snap/theme#snaps-cannot-specify).

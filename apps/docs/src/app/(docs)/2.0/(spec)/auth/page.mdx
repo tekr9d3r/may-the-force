@@ -1,0 +1,180 @@
+# Authentication
+
+Every POST request from the client to a snap server MUST be authenticated with
+[JSON Farcaster Signatures](https://github.com/farcasterxyz/protocol/discussions/208)
+(JFS).
+
+GET requests MAY include viewer identity when the client sends an optional
+`X-Snap-Payload` header (see [Authenticated GETs](#authenticated-gets)). Authentication
+on GET is optional and best-effort: servers SHOULD support anonymous GET requests when
+the header is absent.
+
+## How It Works
+
+When a user taps a `post` button, the Farcaster client:
+
+1. Collects all input values from the current page
+2. Builds a payload with the user's identity (user.fid), timestamp, audience, and other
+   payload fields that are unrelated to authentication.
+3. Signs the payload using the user's Farcaster signer key
+4. Sends the signed JFS compact string as the POST body
+
+The snap server then:
+
+1. Verifies the JFS signature cryptographically
+2. Checks the signing key against hub state for the claimed FID
+3. Validates that `audience` matches the server's origin
+4. Validates `timestamp` for replay protection
+5. Processes the request and returns a new page
+
+## JFS Payload Shape
+
+The decoded JFS payload (signed inside JFS, not sent as bare JSON):
+
+```json
+{
+  "fid": 12345,
+  "inputs": {
+    "guess": "CLASS",
+    "vote": "Tabs"
+  },
+  "timestamp": 1710864000,
+  "audience": "https://snap.example.com",
+  "user": {
+    "fid": 12345
+  },
+  "surface": {
+    "type": "standalone"
+  }
+}
+```
+
+## Audience
+
+The payload MUST contain an `audience` field set to the origin of the snap server the
+request is intended for. Origin = scheme + host + port (port only needed if it is not
+the default port for that scheme)
+
+Servers MUST reject requests where `audience` does not match the server's own origin.
+This prevents a signed payload meant for one snap from being replayed against a
+different snap server.
+
+## Replay protection
+
+The payload MUST contain a `timestamp` field (Unix seconds).
+
+Servers MUST reject requests with timestamps outside an allowed skew (default 5
+minutes).
+
+If strict replay protection is needed beyond that, clients should add a `nonce` field
+(unique per request) to the signed payload.
+
+## Authenticated GETs
+
+Clients MAY attach a JFS payload to snap GET requests using the `X-Snap-Payload` request
+header. The value uses the compact JFS form:
+
+```
+X-Snap-Payload: BASE64URL(header).BASE64URL(payload).BASE64URL(signature)
+```
+
+- Sending this header on GET requests is optional. Snaps that do not send
+  `X-Snap-Payload`.
+- If the header is present, servers MUST reject a malformed, expired, or invalid values
+  with a 4xx response.
+- When a response depends on `action.user` (or other viewer-specific data), the server
+  SHOULD send `Cache-Control: private` or a short `max-age` together with
+  `Vary: X-Snap-Payload` so personalized responses are not shared incorrectly between
+  viewers. See [HTTP Headers](/snap/http-headers).
+
+### `action.user` on GET is never guaranteed
+
+Servers MUST NOT depend on receiving a viewer FID on a GET. Each GET is an independent
+request, and `X-Snap-Payload` may be absent for any number of reasons. Design every snap
+so that anonymous GETs work and make sense. Treat `action.user` on GET as a strict
+enhancement: when present, you may personalize; when absent, render a working signed-out
+experience.
+
+## Requirements
+
+- The client MUST send a valid JFS for every authenticated POST
+- The client MUST include the user's FID, `audience` (server origin) and `timestamp`
+  (Unix seconds) in every payload
+- The server MUST verify the JFS cryptographically and MUST verify the signing key
+  against hub (or equivalent) state for the FID
+- The server MUST verify that `audience` matches its own origin
+- The server MUST enforce timestamp skew checks
+
+## JSON Farcaster Signatures (JFS) Format
+
+JFS is a standardized way for Farcaster identities to sign arbitrary payloads. It
+consists of three components:
+
+1. **Header** — metadata (FID, key type, key)
+2. **Payload** — the content being signed
+3. **Signature** — the cryptographic signature
+
+### Compact Serialization
+
+JFS uses a dot-separated format similar to JWT:
+
+```
+BASE64URL(header) . BASE64URL(payload) . BASE64URL(signature)
+```
+
+The signing input is constructed as:
+
+```
+ASCII(BASE64URL(UTF8(Header)) || '.' || BASE64URL(Payload))
+```
+
+### Key Types
+
+JFS supports three key types:
+
+| Type      | Signature Method | Description                              |
+| --------- | ---------------- | ---------------------------------------- |
+| `custody` | ERC-191          | Signature from the FID's custody address |
+| `auth`    | ERC-191          | Signature from a registered auth address |
+| `app_key` | EdDSA            | Signature from a registered App Key      |
+
+For snaps, the client typically uses `app_key` (EdDSA signature from the user's
+registered signer key).
+
+### Verification
+
+To verify a JFS:
+
+1. Decode the header and extract the `fid`, `type`, and `key`
+2. Verify the FID is registered and the key is active for that FID
+3. Verify the signature matches the signing input using the declared key
+4. Query a Farcaster Hub to confirm the key is currently associated with the FID
+
+### Reference Implementation
+
+The official JFS Node.js package is
+[`@farcaster/jfs`](https://github.com/farcasterxyz/auth-monorepo).
+
+## Server-Side Verification with @farcaster/snap-hono
+
+The `@farcaster/snap-hono` package handles JFS verification automatically:
+
+```typescript
+import { registerSnapHandler } from "@farcaster/snap-hono";
+
+registerSnapHandler(
+  app,
+  async (ctx) => {
+    // On POST: ctx.action.user.fid is verified — the JFS signature was checked
+    // ctx.action.inputs contains the user's input values
+    // On GET: if (ctx.action.user) { … } for optional viewer-aware first loads (X-Snap-Payload)
+    // Distinguish buttons via distinct submit target URLs on each button (ctx.request.url)
+  },
+  {
+    skipJFSVerification: false, // set to `true` for local dev
+  },
+);
+```
+
+Set `SKIP_JFS_VERIFICATION=1` in your environment to skip JFS verification for local
+development.

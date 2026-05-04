@@ -1,0 +1,423 @@
+# @farcaster/snap-hono
+
+## 2.1.3
+
+### Patch Changes
+
+- Updated dependencies [[`f74becd`](https://github.com/farcasterxyz/snap/commit/f74becd43abbd76774be41c87db628fffea5f1e3), [`efe6004`](https://github.com/farcasterxyz/snap/commit/efe600462261d03e167f161f555e10d50edc3c52)]:
+  - @farcaster/snap@2.4.0
+
+## 2.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`0dc18a2`](https://github.com/farcasterxyz/snap/commit/0dc18a2b149fb1bb9dd1fc53c7ab43c8808d9659)]:
+  - @farcaster/snap@2.3.1
+
+## 2.1.1
+
+### Patch Changes
+
+- Updated dependencies [[`3f25a68`](https://github.com/farcasterxyz/snap/commit/3f25a68acf08132891a6d4e72bd66c0265b5fe35), [`e2e45a1`](https://github.com/farcasterxyz/snap/commit/e2e45a152df97194072e25094fc44042e1082b0a), [`7bd3591`](https://github.com/farcasterxyz/snap/commit/7bd3591c7fb4ed17f5d2aca7b8fbb058cf1ec757)]:
+  - @farcaster/snap@2.3.0
+
+## 2.1.0
+
+### Minor Changes
+
+- [#164](https://github.com/farcasterxyz/snap/pull/164) [`f88e99f`](https://github.com/farcasterxyz/snap/commit/f88e99fa2bbdb2261d88b4f741c9f27aafae3e9b) Thanks [@lyoshenka](https://github.com/lyoshenka)! - allow GET requests to include a signed snap payload
+
+### Patch Changes
+
+- Updated dependencies [[`d59ebe2`](https://github.com/farcasterxyz/snap/commit/d59ebe22e0c2e05dd05915692250024c3e7eafce), [`f88e99f`](https://github.com/farcasterxyz/snap/commit/f88e99fa2bbdb2261d88b4f741c9f27aafae3e9b)]:
+  - @farcaster/snap@2.2.0
+
+## 2.0.6
+
+### Patch Changes
+
+- Updated dependencies [[`3b62b7e`](https://github.com/farcasterxyz/snap/commit/3b62b7e7342507bac224a849d93bb7551519375f)]:
+  - @farcaster/snap@2.1.2
+
+## 2.0.5
+
+### Patch Changes
+
+- Updated dependencies [[`25900c8`](https://github.com/farcasterxyz/snap/commit/25900c8ac49d6ca1008d9df1029864e7c4b9f613)]:
+  - @farcaster/snap@2.1.1
+
+## 2.0.4
+
+### Patch Changes
+
+- Updated dependencies [[`66f3b9c`](https://github.com/farcasterxyz/snap/commit/66f3b9c8370240eaf7324a21de2228ecfc50b4fd), [`bfbf8e7`](https://github.com/farcasterxyz/snap/commit/bfbf8e7a38379d5f036df4ebf4069820440cb767), [`1661cbe`](https://github.com/farcasterxyz/snap/commit/1661cbe7154230d3eeb9134be1c56ecd23a8c5ca)]:
+  - @farcaster/snap@2.1.0
+
+## 2.0.3
+
+### Patch Changes
+
+- Updated dependencies [[`fab022c`](https://github.com/farcasterxyz/snap/commit/fab022ca80431036eae3220acce762270c243007)]:
+  - @farcaster/snap@2.0.3
+
+## 2.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`374badb`](https://github.com/farcasterxyz/snap/commit/374badb921725b21eedf02c2513a071974b1ef43)]:
+  - @farcaster/snap@2.0.2
+
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [[`f16ea0b`](https://github.com/farcasterxyz/snap/commit/f16ea0b7bbbe12a7e601d3625af8e8cf0cdb1bce)]:
+  - @farcaster/snap@2.0.1
+
+## 2.0.0
+
+### Major Changes
+
+- [`f989ece`](https://github.com/farcasterxyz/snap/commit/f989ece61e1f1e368d1b9ab6e2826c1442c8a9e1) Thanks [@lyoshenka](https://github.com/lyoshenka)! - since we bumped snap to v2, might as well bump these too to stay in sync (also copilot suggested we do this)
+
+## 1.6.0
+
+### Minor Changes
+
+- [#131](https://github.com/farcasterxyz/snap/pull/131) [`89796c1`](https://github.com/farcasterxyz/snap/commit/89796c13cbc5e64616b4a039de3d20fda9fe6997) Thanks [@lyoshenka](https://github.com/lyoshenka)! - This release upgrades `@farcaster/snap` to v2 and includes breaking changes to the POST payload schema.
+
+  Consumers must update requests that were sending the v1 payload shape:
+  - remove the previously required `nonce` field
+  - add the `user` field
+  - add the `surface` field
+  - treat `user` and `surface` as required in v2
+  - deprecate `fid` in favor of `user.fid`
+
+  v1-style payloads are not forward-compatible with v2; callers should update request construction before upgrading.
+
+  The easiest way to upgrade is to tell your agent `read https://docs.farcaster.xyz/snap/SKILL.md, then upgrade dependencies and the snap to the latest versions`
+
+### Patch Changes
+
+- Updated dependencies [[`89796c1`](https://github.com/farcasterxyz/snap/commit/89796c13cbc5e64616b4a039de3d20fda9fe6997)]:
+  - @farcaster/snap@2.0.0
+
+## 1.5.12
+
+### Patch Changes
+
+- Updated dependencies [[`2ed9dc9`](https://github.com/farcasterxyz/snap/commit/2ed9dc91ff8f94a35b8cedf0b847ac7b44efd886)]:
+  - @farcaster/snap@1.22.1
+
+## 1.5.11
+
+### Patch Changes
+
+- Updated dependencies [[`7b8476e`](https://github.com/farcasterxyz/snap/commit/7b8476e05031c79849ed78b7084e145abbcb2c07)]:
+  - @farcaster/snap@1.22.0
+
+## 1.5.10
+
+### Patch Changes
+
+- Updated dependencies [[`5101555`](https://github.com/farcasterxyz/snap/commit/51015553c63491b3499912f81aa4790e0ccf12dd)]:
+  - @farcaster/snap@1.21.0
+
+## 1.5.9
+
+### Patch Changes
+
+- Updated dependencies [[`968505d`](https://github.com/farcasterxyz/snap/commit/968505d417fe69cf2e22888b7cbaeeb3e1a9e15c), [`968505d`](https://github.com/farcasterxyz/snap/commit/968505d417fe69cf2e22888b7cbaeeb3e1a9e15c)]:
+  - @farcaster/snap@1.20.0
+
+## 1.5.8
+
+### Patch Changes
+
+- Updated dependencies [[`a9d42ad`](https://github.com/farcasterxyz/snap/commit/a9d42addd669409364f17a90c9a99e937c29bc0d)]:
+  - @farcaster/snap@1.19.0
+
+## 1.5.7
+
+### Patch Changes
+
+- Updated dependencies [[`960973d`](https://github.com/farcasterxyz/snap/commit/960973d329022c7fdbfa9be66178fba18d42bb38)]:
+  - @farcaster/snap@1.18.0
+
+## 1.5.6
+
+### Patch Changes
+
+- Updated dependencies [[`675720f`](https://github.com/farcasterxyz/snap/commit/675720f36b451cd4e3341ab558722b15d93ea252)]:
+  - @farcaster/snap@1.17.2
+
+## 1.5.5
+
+### Patch Changes
+
+- Updated dependencies [[`c6dc2c3`](https://github.com/farcasterxyz/snap/commit/c6dc2c3edf6101cf469723b1fa79ddce61f9e42b)]:
+  - @farcaster/snap@1.17.1
+
+## 1.5.4
+
+### Patch Changes
+
+- [#105](https://github.com/farcasterxyz/snap/pull/105) [`d967427`](https://github.com/farcasterxyz/snap/commit/d9674276e69f5f26e1cad76b0af2d431859720e4) Thanks [@bob-obringer](https://github.com/bob-obringer)! - Fix audience validation behind reverse proxies in the Hono handler. The origin derivation now checks X-Forwarded-Proto and X-Forwarded-Host headers before falling back to request.url.
+
+- Updated dependencies [[`675d7ae`](https://github.com/farcasterxyz/snap/commit/675d7ae9e3f176c5a24f9ebb24de87b5ce62c389)]:
+  - @farcaster/snap@1.17.0
+
+## 1.5.3
+
+### Patch Changes
+
+- Updated dependencies [[`cb41e17`](https://github.com/farcasterxyz/snap/commit/cb41e17c0769aa14a98afa1b0be9d4337b4d7cd3)]:
+  - @farcaster/snap@1.16.3
+
+## 1.5.2
+
+### Patch Changes
+
+- Updated dependencies [[`9b04d3b`](https://github.com/farcasterxyz/snap/commit/9b04d3b9b16ca03a3827ec7895a02f4c498c2f79)]:
+  - @farcaster/snap@1.16.2
+
+## 1.5.1
+
+### Patch Changes
+
+- Updated dependencies [[`4cf9210`](https://github.com/farcasterxyz/snap/commit/4cf921010deb9be803966f8c99c9c1091ab3c1a2)]:
+  - @farcaster/snap@1.16.1
+
+## 1.5.0
+
+### Minor Changes
+
+- [#95](https://github.com/farcasterxyz/snap/pull/95) [`145297b`](https://github.com/farcasterxyz/snap/commit/145297b8d9dcb06182a8292a830aa5c9c33b24a5) Thanks [@bob-obringer](https://github.com/bob-obringer)! - Add audience origin validation for v2 snap requests. The server now passes the request origin to `parseRequest` and handles the new `origin_mismatch` error case. Also improves origin detection to use `URL.origin` for more reliable parsing.
+
+### Patch Changes
+
+- Updated dependencies [[`145297b`](https://github.com/farcasterxyz/snap/commit/145297b8d9dcb06182a8292a830aa5c9c33b24a5), [`145297b`](https://github.com/farcasterxyz/snap/commit/145297b8d9dcb06182a8292a830aa5c9c33b24a5)]:
+  - @farcaster/snap@1.16.0
+
+## 1.4.11
+
+### Patch Changes
+
+- Updated dependencies [[`70bbbc1`](https://github.com/farcasterxyz/snap/commit/70bbbc173b7ab532cd1e73522dd7b1d41ace1704)]:
+  - @farcaster/snap@1.15.4
+
+## 1.4.10
+
+### Patch Changes
+
+- Updated dependencies [[`a43c623`](https://github.com/farcasterxyz/snap/commit/a43c6237d60dfc581b6402baaab201b8ec9508c4)]:
+  - @farcaster/snap@1.15.3
+
+## 1.4.9
+
+### Patch Changes
+
+- Updated dependencies [[`4511666`](https://github.com/farcasterxyz/snap/commit/45116663b43adf0587d41152850e923ba38cde87)]:
+  - @farcaster/snap@1.15.2
+
+## 1.4.8
+
+### Patch Changes
+
+- [`c005511`](https://github.com/farcasterxyz/snap/commit/c00551185215df5825781e2f70d75d596703f4fa) Thanks [@lyoshenka](https://github.com/lyoshenka)! - add title/description to hono
+
+## 1.4.7
+
+### Patch Changes
+
+- Updated dependencies [[`9825b48`](https://github.com/farcasterxyz/snap/commit/9825b484410c759bbe6351d005c8ed8129daff0b)]:
+  - @farcaster/snap@1.15.1
+
+## 1.4.6
+
+### Patch Changes
+
+- Updated dependencies [[`e9649fb`](https://github.com/farcasterxyz/snap/commit/e9649fb385d6d708a38d631d142967d36a60eb01)]:
+  - @farcaster/snap@1.15.0
+
+## 1.4.5
+
+### Patch Changes
+
+- Updated dependencies [[`93973e2`](https://github.com/farcasterxyz/snap/commit/93973e23768cd3746e1a8719b1b9e8e85f913517)]:
+  - @farcaster/snap@1.14.0
+
+## 1.4.4
+
+### Patch Changes
+
+- Updated dependencies [[`9bbebf9`](https://github.com/farcasterxyz/snap/commit/9bbebf937b6540fbb94c77fd95151f1c8e09f087)]:
+  - @farcaster/snap@1.13.0
+
+## 1.4.3
+
+### Patch Changes
+
+- [`5be48bf`](https://github.com/farcasterxyz/snap/commit/5be48bfe1f517bb1b725a616bdf0b541cbab5e74) Thanks [@lyoshenka](https://github.com/lyoshenka)! - moved data storage out of snap package and strictly into snap-turso
+
+- Updated dependencies [[`5be48bf`](https://github.com/farcasterxyz/snap/commit/5be48bfe1f517bb1b725a616bdf0b541cbab5e74)]:
+  - @farcaster/snap@1.10.0
+
+## 1.4.2
+
+### Patch Changes
+
+- Updated dependencies [[`ecab10f`](https://github.com/farcasterxyz/snap/commit/ecab10f058da2cb270b542ef3ad4a596b1696b7e)]:
+  - @farcaster/snap@1.8.0
+
+## 1.4.1
+
+### Patch Changes
+
+- Updated dependencies [[`47bb9cb`](https://github.com/farcasterxyz/snap/commit/47bb9cb97b56c8b434a5e4787ef27bd89267513e)]:
+  - @farcaster/snap@1.7.1
+
+## 1.4.0
+
+### Minor Changes
+
+- [`644763c`](https://github.com/farcasterxyz/snap/commit/644763ca68ef93e0682b75f8476d9671a4f7c125) Thanks [@lyoshenka](https://github.com/lyoshenka)! - switch to json-render
+
+### Patch Changes
+
+- Updated dependencies [[`644763c`](https://github.com/farcasterxyz/snap/commit/644763ca68ef93e0682b75f8476d9671a4f7c125)]:
+  - @farcaster/snap@1.6.0
+
+## 1.3.2
+
+### Patch Changes
+
+- Updated dependencies [[`7bc09f8`](https://github.com/farcasterxyz/snap/commit/7bc09f884ce6d8c1eb3c7e7163a184ef4618f363)]:
+  - @farcaster/snap@1.5.2
+
+## 1.3.1
+
+### Patch Changes
+
+- Updated dependencies [[`740ad60`](https://github.com/farcasterxyz/snap/commit/740ad605a9909688f39ab717df322ba65ed5fb59)]:
+  - @farcaster/snap@1.5.1
+
+## 1.3.0
+
+### Minor Changes
+
+- [#31](https://github.com/farcasterxyz/snap/pull/31) [`55eab71`](https://github.com/farcasterxyz/snap/commit/55eab711f32cc61eb41ba583ec248f7c50392f00) Thanks [@lyoshenka](https://github.com/lyoshenka)! - Add a key-value data store to snaps.
+
+  `SnapContext` now includes a required `data: SnapDataStore` field with `get(key)` and `set(key, value)` methods and a `withLock(fn)` method for concurrency-safe reads and writes. `@farcaster/snap` exports the `SnapDataStore`, `SnapDataStoreOperations`, and `DataStoreValue` types, plus `createDefaultDataStore()` which returns a stub that throws on use.
+
+  The new `@farcaster/snap-upstash` package provides `withUpstash(snapFn)`, a `SnapFunction` wrapper that injects an Upstash Redis-backed store when `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are set. `withLock` uses `@upstash/lock` with a configurable timeout to serialize concurrent access.
+
+### Patch Changes
+
+- Updated dependencies [[`55eab71`](https://github.com/farcasterxyz/snap/commit/55eab711f32cc61eb41ba583ec248f7c50392f00)]:
+  - @farcaster/snap@1.5.0
+
+## 1.2.1
+
+### Patch Changes
+
+- [`f4af26f`](https://github.com/farcasterxyz/snap/commit/f4af26f22e818376d2a2e9cf4747e3ccb23df569) Thanks [@lyoshenka](https://github.com/lyoshenka)! - export more types, add og image generation
+
+- Updated dependencies [[`f4af26f`](https://github.com/farcasterxyz/snap/commit/f4af26f22e818376d2a2e9cf4747e3ccb23df569)]:
+  - @farcaster/snap@1.4.1
+
+## 1.2.0
+
+### Minor Changes
+
+- [`9171ca2`](https://github.com/farcasterxyz/snap/commit/9171ca2cb6888019ca407d25183d871122897ba3) Thanks [@lyoshenka](https://github.com/lyoshenka)! - fix inconsistencies, rename some params and exports
+
+### Patch Changes
+
+- Updated dependencies [[`9171ca2`](https://github.com/farcasterxyz/snap/commit/9171ca2cb6888019ca407d25183d871122897ba3)]:
+  - @farcaster/snap@1.4.0
+
+## 1.1.8
+
+### Patch Changes
+
+- [#25](https://github.com/farcasterxyz/snap/pull/25) [`2472b30`](https://github.com/farcasterxyz/snap/commit/2472b30a678859f47b49a36f6c1a7d780512e10a) Thanks [@rishavmukherji](https://github.com/rishavmukherji)! - fix: make button_layout and theme optional in SnapFunction return type
+
+  SnapFunction now accepts SnapResponseInput (Zod input type) instead of SnapResponse (Zod output type), so fields with schema defaults like button_layout and theme.accent are optional in handler return values.
+
+- Updated dependencies [[`2472b30`](https://github.com/farcasterxyz/snap/commit/2472b30a678859f47b49a36f6c1a7d780512e10a)]:
+  - @farcaster/snap@1.3.3
+
+## 1.1.7
+
+### Patch Changes
+
+- Updated dependencies [[`c26ef28`](https://github.com/farcasterxyz/snap/commit/c26ef28266c4b18f6939413aecacb1088ae7e224)]:
+  - @farcaster/snap@1.3.2
+
+## 1.1.6
+
+### Patch Changes
+
+- [`b85eb51`](https://github.com/farcasterxyz/snap/commit/b85eb511b22b8aacbbf6f47d45155d134f585494) Thanks [@lyoshenka](https://github.com/lyoshenka)! - drop video elements from spec (not really a patch change, i know)
+
+- Updated dependencies [[`b85eb51`](https://github.com/farcasterxyz/snap/commit/b85eb511b22b8aacbbf6f47d45155d134f585494)]:
+  - @farcaster/snap@1.3.1
+
+## 1.1.5
+
+### Patch Changes
+
+- Updated dependencies [[`6e82952`](https://github.com/farcasterxyz/snap/commit/6e82952a6e1074d99d887ef06955bd884250bb3c)]:
+  - @farcaster/snap@1.3.0
+
+## 1.1.4
+
+### Patch Changes
+
+- Updated dependencies [[`d32b8a8`](https://github.com/farcasterxyz/snap/commit/d32b8a82e406c7ad7ceaafb66cb372865c6c3052)]:
+  - @farcaster/snap@1.2.2
+
+## 1.1.3
+
+### Patch Changes
+
+- Updated dependencies [[`f7a394d`](https://github.com/farcasterxyz/snap/commit/f7a394dd7dcf11393b5f332f1ae35267ce4ed21e)]:
+  - @farcaster/snap@1.2.1
+
+## 1.1.2
+
+### Patch Changes
+
+- [`94a09ac`](https://github.com/farcasterxyz/snap/commit/94a09ac79803ae090f9ae64bc142d17f5dd5768f) Thanks [@lyoshenka](https://github.com/lyoshenka)! - remove hub-nodejs dep so we can deploy to vercel
+
+## 1.1.1
+
+### Patch Changes
+
+- [`f33d19b`](https://github.com/farcasterxyz/snap/commit/f33d19b8d260ff039888fea257b6c5c60968cbe6) Thanks [@lyoshenka](https://github.com/lyoshenka)! - fix hono missing.js extension
+
+## 1.1.0
+
+### Minor Changes
+
+- [`b81112e`](https://github.com/farcasterxyz/snap/commit/b81112efeb0e30a04a0b988ba214524b48990992) Thanks [@lyoshenka](https://github.com/lyoshenka)! - change content-type header to be more standard, move node-dependent packages into separate export
+
+### Patch Changes
+
+- Updated dependencies [[`b81112e`](https://github.com/farcasterxyz/snap/commit/b81112efeb0e30a04a0b988ba214524b48990992)]:
+  - @farcaster/snap@1.2.0
+
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`43efc94`](https://github.com/farcasterxyz/snap/commit/43efc94445294975662431cb3db329437dc20de1)]:
+  - @farcaster/snap@1.1.1
+
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [[`cf8ab58`](https://github.com/farcasterxyz/snap/commit/cf8ab58b0a64bcf249ab9b738750733b45dfbd82)]:
+  - @farcaster/snap@1.1.0
