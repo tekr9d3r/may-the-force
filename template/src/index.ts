@@ -15,7 +15,10 @@ app.use("*", cors({ origin: "*" }));
 app.get("/", async (c) => {
   const accept = c.req.header("Accept") ?? "";
   if (!accept.includes(MEDIA_TYPE)) {
-    return c.html("<p>Open this snap in Warpcast!</p>");
+    const snapUrl = snapBaseUrl(c.req.raw) + "/";
+    return c.html("<p>Open this snap in Warpcast!</p>", 200, {
+      Link: `<${snapUrl}>; rel="alternate"; type="${MEDIA_TYPE}"`,
+    });
   }
   const lightForce = ((await store.get("force:light")) as number) ?? 0;
   const darkForce = ((await store.get("force:dark")) as number) ?? 0;
