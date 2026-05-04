@@ -4,7 +4,7 @@ import {
 } from "@farcaster/snap-turso";
 
 export const store =
-  process.env.VERCEL === "1"
+  process.env.TURSO_DATABASE_URL
     ? createTursoDataStore()
     : createInMemoryDataStore();
 
