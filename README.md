@@ -1,90 +1,68 @@
-# Farcaster Snaps 🫰
+# May the Force Be With You ⚡
 
-Snaps are simple, nimble apps embedded in [Farcaster](https://farcaster.xyz) casts.
+A [Farcaster Snap](https://farcaster.xyz) for May the 4th — a Force battle between the Light Side and the Dark Side.
 
-This is the monorepo for the core packages, docs site, emulator, template, and examples.
+Users reveal their personal Force score (based on their Farcaster FID and follower count), pick a side, and shift the balance of power across the whole network.
 
-> [!NOTE]
-> This spec is in beta and may change rapidly in the near term.
+## What it does
 
-## 🚀 Quickstart
+1. **Check Your Force** — the snap calculates your Force Power: lower FIDs and more followers = stronger Force.
+2. **Pick a side** — join the Light Side ☀️ or the Dark Side 🌑.
+3. **See the balance** — a live bar chart shows how Farcaster is split between the two sides.
+4. **Share** — compose a cast with your Force score and the current battle state.
 
-Tell your agent
+## Tech stack
+
+| Layer | Technology |
+|---|---|
+| Snap server | [Hono](https://hono.dev) + TypeScript |
+| Farcaster protocol | [`@farcaster/snap`](https://docs.farcaster.xyz/snap) — JFS verification, snap schema |
+| User data | [Neynar API](https://neynar.com) — follower count, profile pictures |
+| Database | [Turso](https://turso.tech) (SQLite, edge) with in-memory fallback for local dev |
+| Deployment | [Vercel](https://vercel.com) Edge Runtime |
+| Emulator | Next.js app for local snap development and testing |
+| Monorepo | [pnpm](https://pnpm.io) workspaces + [Turborepo](https://turbo.build) |
+
+## Project structure
 
 ```
-Read https://docs.farcaster.xyz/snap/SKILL.md and make a snap that ...
+template/       Snap server (the deployable Farcaster snap)
+  src/
+    index.ts    Snap screens and request handling
+    neynar.ts   Neynar API calls (follower count, profile pictures)
+    store.ts    Vote persistence (Turso / in-memory)
+    force.ts    Force Power calculation
+  public/       Static assets served alongside the snap
+apps/
+  emulator/     Local web emulator for testing snaps
 ```
 
-## 📖 Docs for Humans
-
-See [docs.farcaster.xyz/snap](https://docs.farcaster.xyz/snap) for more info.
-
-## Packages
-
-### @farcaster/snap
-
-Core library for Snap servers: schemas and types for snap JSON, validation of pages and POST bodies, and JFS verification for payloads (`verifyJFS`).
-
-The human-readable spec is authored as MDX under `apps/docs/src/app/(docs)/` and published at [docs.farcaster.xyz/snap](https://docs.farcaster.xyz/snap).
-
-### @farcaster/snap-emulator
-
-A local snap emulator where you paste a snap URL and interact with it.
-
-This emulator does **not** sign its payload with real private keys, so it only works with snaps that skip payload signature verification.
-
-An [emulator with JFS signing](https://farcaster.xyz/~/developers/snaps) is available inside the Farcaster web app.
-
-```bash
-pnpm --filter @farcaster/snap-emulator dev
-# Opens at `http://localhost:3000`.
-```
-
-The emulator lives under [`apps/emulator`](./apps/emulator). Hono examples are under [`examples/`](./examples/README.md); the deployable starter is [`template/`](./template/README.md).
-
-### @farcaster/snap-hono
-
-Adapter and convenience methods for running a Snap server using [Hono](https://hono.dev)
-
-### @farcaster/snap/ui
-
-The json-render catalog for snaps is exported from `@farcaster/snap/ui` and per-component sub-paths (e.g., `@farcaster/snap/ui/button`). Built on [json-render](https://json-render.dev/).
-
-## 🛠️ Development
-
-This repo uses [pnpm](https://pnpm.io/) workspaces and [Turborepo](https://turbo.build/). Install dependencies once from the root:
+## Local development
 
 ```bash
 pnpm install
+
+# Run the snap server (http://localhost:3003)
+pnpm --filter snap-template dev
+
+# Run the emulator (http://localhost:3000)
+pnpm --filter @farcaster/snap-emulator dev
 ```
 
-Common tasks:
+Paste `http://localhost:3003` into the emulator to interact with the snap locally.
 
-```bash
-pnpm build       # turbo build — all packages (snap + hono + emulator + examples)
-pnpm test        # turbo test — Vitest in @farcaster/snap
-pnpm typecheck   # turbo typecheck
-```
+Set `SKIP_JFS_VERIFICATION=true` in `template/.env` to bypass signature checks during development.
 
-(Use a recent Node; `corepack enable` then `corepack prepare pnpm@9.15.4 --activate` if you need to pin the same pnpm as [package.json](./package.json).)
+## Environment variables
 
-`turbo dev` builds workspace dependencies first (`^build`). Example: `pnpm exec turbo dev --filter=@farcaster/snap-emulator`.
+| Variable | Required | Description |
+|---|---|---|
+| `NEYNAR_API_KEY` | Yes (production) | Neynar API key for fetching user data |
+| `TURSO_DATABASE_URL` | Yes (production) | Turso database URL |
+| `TURSO_AUTH_TOKEN` | Yes (production) | Turso auth token |
+| `SNAP_PUBLIC_BASE_URL` | Optional | Override base URL for snap asset links |
+| `SKIP_JFS_VERIFICATION` | Dev only | Set to `true` to skip JFS signature checks |
 
-## Releases and Changesets
+## Deploying
 
-Published packages are versioned with [Changesets](https://github.com/changesets/changesets). Each package keeps its own semver; internal workspace references are bumped as patch when needed.
-
-**When you change something consumers should know about**, add a changeset in your PR (not on every commit):
-
-```bash
-pnpm exec changeset
-```
-
-Pick the affected package(s) and the bump level (major / minor / patch). That writes a file under [`.changeset/`](./.changeset/); commit it with your code.
-
-**On push to `main`**, the [Changesets workflow](.github/workflows/changesets.yml) runs (alongside the same [verify](.github/workflows/verify.yml) jobs as on pull requests). The [changesets/action](https://github.com/changesets/action) step either:
-
-- Opens or updates a **Version packages** PR (`pnpm changeset:version` — bumps versions, updates changelogs from your changeset files, refreshes the lockfile, runs `pnpm typecheck`), or
-- If that PR was merged and there is nothing left to version, runs **`pnpm changeset:publish`** — builds `pkgs/*` and publishes to npm.
-
-Changelogs use [@changesets/changelog-github](https://github.com/changesets/changelog-github) against this repo. GitHub Releases are created for published versions on `main`.
+The fastest way to deploy is [Neynar's snap host](https://host.neynar.app). The `template/vercel.json` is already configured for Vercel Edge deployment.
